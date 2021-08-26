@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import AppAddNewPlace from '../components/AppAddNewPlace'
 import {
   selectPins,
+  selectMessage,
+  selectSnackbarResult,
   fetchPinsAsync,
 } from '../redux/pinSlice'
 
@@ -17,7 +19,8 @@ export default function Home() {
 
   const dispatch = useDispatch()
   const pins = useSelector(selectPins)
-  const [openSnackbar, setOpenSnackbar] = useState(false)
+  const message = useSelector(selectMessage)
+  const snackbarStatus = useSelector(selectSnackbarResult)
   const [currentPlaceId, setCurrentPlaceId] = useState(null)
   const [currentPosition, setCurrentPosition] = useState(null)
   const [openDialog, setOpenDialog] = useState(false)
@@ -46,13 +49,14 @@ export default function Home() {
     <Box className="map-wrapper">
       <AppDialog openDialog={openDialog} dialogTitle={dialogTitle} setOpenDialog={() => {
         setOpenDialog(false)
-        setOpenSnackbar(true)
       }} />
-      <Snackbar open={openSnackbar} autoHideDuration={2000}>
-        <Alert severity="success">
-          Welcome Back ✈🚢🧳
-        </Alert>
-      </Snackbar>
+      {snackbarStatus != null && (
+        <Snackbar open={snackbarStatus} autoHideDuration={2000}>
+          <Alert severity={snackbarStatus ? 'success' : 'error'}>
+            {message}
+          </Alert>
+        </Snackbar>
+      )}
       <AppManageAuth setDialogTitle={setDialogTitle} setOpenDialog={setOpenDialog} />
       <ReactMapGL
         {...viewport}

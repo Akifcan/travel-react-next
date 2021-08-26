@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Box, Button } from '@material-ui/core'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd'
-import { getCurrentUser } from '../apis'
+import { getCurrentUser, logoutUser } from '../apis'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 
@@ -11,6 +11,7 @@ export default function AppManageAuth({ setOpenDialog, setDialogTitle }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {
+        console.log(getCurrentUser());
         if (getCurrentUser()) {
             setIsLoggedIn(true)
         }
@@ -47,6 +48,10 @@ export default function AppManageAuth({ setOpenDialog, setDialogTitle }) {
                 <Button
                     variant="contained"
                     color="secondary"
+                    onClick={() => {
+                        logoutUser()
+                        setIsLoggedIn(false)
+                    }}
                     startIcon={<ExitToAppIcon />}
                 >
                     Logout

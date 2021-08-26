@@ -5,3 +5,8 @@ export const store = configureStore({
         pin: pinReducer
     }
 })
+
+store.subscribe(() => {
+    console.log(store.getState());
+})
+

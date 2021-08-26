@@ -8,5 +8,7 @@ snackbar [ x ]
 control auth [ x ]
 
 redux [ x ]
-add new place [  ]
+add new place [ x ]
+login redux [  ]
+new user profile photo [  ]
 socket [  ]

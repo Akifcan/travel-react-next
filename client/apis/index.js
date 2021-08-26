@@ -11,7 +11,11 @@ export const getObjectStore = (value) => {
 }
 
 export const getCurrentUser = () => {
-    return JSON.parse(localStorage.user)
+    return localStorage.user ? JSON.parse(localStorage.user) : null
+}
+
+export const logoutUser = () => {
+    deleteObjectStore('user')
 }
 
 export const getPins = async () => {
@@ -75,3 +79,11 @@ export const loginApi = async ({ email, password }) => {
     }
 }
 
+export const addNewPlace = async (place) => {
+    const response = await fetch(`${process.env.BASE_URL}/pins`, {
+        headers: { 'content-type': 'application/json' },
+        method: 'POST',
+        body: JSON.stringify(place)
+    })
+    return response.status
+}
