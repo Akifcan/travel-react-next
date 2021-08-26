@@ -8,7 +8,9 @@ router.post('/register', async (req: Request, res: Response) => {
     try{
         const { email, username } = req.body
         const password : string = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10))
-        res.status(200).json(await Users.create({email, username, password}))
+        console.log(password);
+        
+        res.status(201).json(await Users.create({email, username, password}))
     }catch(error){
         console.log(error);
         throw new Error('Error')
@@ -25,7 +27,7 @@ router.post('/login', async (req: Request, res: Response) => {
             user!.password
         )
         if(!validPassword) res.status(401).json({message: 'Unauthorized'})
-        res.status(200).json(user)
+        res.status(201).json(user)
     }catch(error){
         console.log(error);
         throw new Error('Error')

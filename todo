@@ -1,0 +1,9 @@
+dialogs [ x ]
+
+login components [ x ]
+register components [ x ]
+validation [ x ]
+authorization [  ]
+control auth [  ]
+add new place [  ]
+socket [  ]

@@ -144,3 +144,7 @@ textarea {
 .full-width {
   width: 100%;
 }
+
+.dialog-form {
+  height: auto;
+}

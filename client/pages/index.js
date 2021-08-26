@@ -4,13 +4,10 @@ import AppMarker from '../components/AppMarker'
 import MapIcon from '@material-ui/icons/Map'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import AppDialog from '../components/AppDialog'
+import { getPins } from '../apis'
 
-import { Box, TextField, Button, Grid } from '@material-ui/core'
+import { Box, TextField, Button } from '@material-ui/core'
 
 export default function Home() {
 
@@ -25,13 +22,6 @@ export default function Home() {
     longitude: 27.142826,
     zoom: 8
   })
-
-  async function getPins() {
-    const response = await fetch('http://localhost:5000/api/pins')
-    const json = await response.json()
-    console.log(json);
-    setPins(json)
-  }
 
   const handleMarkerClick = (id, lat, long) => {
     setCurrentPlaceId(id);
@@ -52,54 +42,12 @@ export default function Home() {
 
   useEffect(() => {
     getPins()
+      .then(response => setPins(response))
   }, [])
-
-  useEffect(() => {
-    console.log(currentPosition);
-  }, [currentPosition])
 
   return (
     <Box className="map-wrapper">
-      <Dialog
-        open={openDialog}
-        keepMounted
-        onClose={() => setOpenDialog(false)}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle id="alert-dialog-slide-title">{dialogTitle + ' to Travel'}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12}>
-                <TextField
-                  required
-                  className="full-width"
-                  id="title"
-                  label="Title"
-                  variant="filled" />
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <TextField
-                  className="full-width"
-                  required
-                  id="title"
-                  type="password"
-                  label="Password"
-                  variant="filled" />
-              </Grid>
-            </Grid>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDialog(false)} color="primary">
-            {dialogTitle}
-          </Button>
-          <Button onClick={() => setOpenDialog(false)} color="secondary">
-            Back
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <AppDialog openDialog={openDialog} dialogTitle={dialogTitle} setOpenDialog={() => setOpenDialog(false)} />
       <Box className="buttons">
         <Button
           variant="contained"
