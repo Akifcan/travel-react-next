@@ -4,8 +4,8 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import { TextField, Button, Grid } from '@material-ui/core'
-import Alert from '@material-ui/lab/Alert';
+import { TextField, Button, Grid, Snackbar } from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert'
 
 import { loginApi, registerApi } from '../apis'
 
@@ -27,7 +27,8 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
         loginApi({ email, password })
             .then(response => {
                 if (response.status) {
-                    console.log('OK!');
+                    setOpenDialog()
+                    setOpenSnackbar(true)
                 } else {
                     setShowDialog({ showAlert: true, message: response.message })
                 }
@@ -45,7 +46,8 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
         registerApi({ email, password, username })
             .then(response => {
                 if (response.status) {
-                    console.log('OK!');
+                    setOpenDialog()
+                    setOpenSnackbar(true)
                 } else {
                     setShowDialog({ showAlert: true, message: response.message })
                 }
@@ -70,7 +72,6 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
                         {showDialog.showAlert && (
                             <Alert severity="error">{showDialog.message}</Alert>
                         )}
-                        <br />
                         <Grid container spacing={3}>
                             {dialogTitle == 'Register' && (
                                 <Grid item xs={12} md={12}>

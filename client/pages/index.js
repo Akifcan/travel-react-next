@@ -5,13 +5,18 @@ import MapIcon from '@material-ui/icons/Map'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd'
 import AppDialog from '../components/AppDialog'
+import { Snackbar } from '@material-ui/core'
 import { getPins } from '../apis'
-
+import Alert from '@material-ui/lab/Alert'
 import { Box, TextField, Button } from '@material-ui/core'
+import AppManageAuth from '../components/AppManageAuth'
+
+
 
 export default function Home() {
 
   const [pins, setPins] = useState([])
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   const [currentPlaceId, setCurrentPlaceId] = useState(null)
   const [currentPosition, setCurrentPosition] = useState(null)
   const [openDialog, setOpenDialog] = useState(false)
@@ -47,32 +52,16 @@ export default function Home() {
 
   return (
     <Box className="map-wrapper">
-      <AppDialog openDialog={openDialog} dialogTitle={dialogTitle} setOpenDialog={() => setOpenDialog(false)} />
-      <Box className="buttons">
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            setOpenDialog(true)
-            setDialogTitle('Login')
-          }}
-          startIcon={<LockOpenIcon />}
-        >
-          Login
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            setOpenDialog(true)
-            setDialogTitle('Register')
-
-          }}
-          endIcon={<AssignmentIndIcon />}
-        >
-          Register
-        </Button>
-      </Box>
+      <AppDialog openDialog={openDialog} dialogTitle={dialogTitle} setOpenDialog={() => {
+        setOpenDialog(false)
+        setOpenSnackbar(true)
+      }} />
+      <Snackbar open={openSnackbar} autoHideDuration={2000}>
+        <Alert severity="success">
+          Welcome Back ✈🚢🧳
+        </Alert>
+      </Snackbar>
+      <AppManageAuth setDialogTitle={setDialogTitle} setOpenDialog={setOpenDialog} />
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken={process.env.MAPBOX_API_KEY}

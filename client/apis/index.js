@@ -1,3 +1,7 @@
+export const setStore = () => {
+
+}
+
 export const getPins = async () => {
     const response = await fetch(`${process.env.BASE_URL}/pins`)
     const json = await response.json()
