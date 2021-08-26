@@ -7,7 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import { TextField, Button, Grid, Snackbar } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
 
-import { loginApi, registerApi } from '../apis'
+import { loginApi, registerApi, setObjectStore } from '../apis'
 
 
 export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
@@ -28,7 +28,7 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
             .then(response => {
                 if (response.status) {
                     setOpenDialog()
-                    setOpenSnackbar(true)
+                    setObjectStore('user', response.data)
                 } else {
                     setShowDialog({ showAlert: true, message: response.message })
                 }
@@ -47,7 +47,6 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
             .then(response => {
                 if (response.status) {
                     setOpenDialog()
-                    setOpenSnackbar(true)
                 } else {
                     setShowDialog({ showAlert: true, message: response.message })
                 }
@@ -67,6 +66,7 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
         >
             <form className="full-width dialog-form" onSubmit={dialogTitle == 'Login' ? handleLogin : handleRegister}>
                 <DialogTitle id="alert-dialog-slide-title">{dialogTitle + ' to Travel'}</DialogTitle>
+                <br />
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         {showDialog.showAlert && (

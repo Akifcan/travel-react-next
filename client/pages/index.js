@@ -11,8 +11,6 @@ import Alert from '@material-ui/lab/Alert'
 import { Box, TextField, Button } from '@material-ui/core'
 import AppManageAuth from '../components/AppManageAuth'
 
-
-
 export default function Home() {
 
   const [pins, setPins] = useState([])

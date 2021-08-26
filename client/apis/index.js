@@ -1,5 +1,17 @@
-export const setStore = () => {
+export const setObjectStore = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value))
+}
 
+export const deleteObjectStore = (key) => {
+    localStorage.removeItem(key)
+}
+
+export const getObjectStore = (key, value) => {
+    return JSON.parse(localStorage.getItem(key))
+}
+
+export const getCurrentUser = () => {
+    return JSON.parse(localStorage.getItem('user'))
 }
 
 export const getPins = async () => {
