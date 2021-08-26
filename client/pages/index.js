@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import ReactMapGL, { Marker, Popup } from 'react-map-gl'
+import ReactMapGL from 'react-map-gl'
 import AppMarker from '../components/AppMarker'
-import MapIcon from '@material-ui/icons/Map'
 import AppDialog from '../components/AppDialog'
 import { Snackbar } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
-import { Box, TextField, Button } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 import AppManageAuth from '../components/AppManageAuth'
 import { useSelector, useDispatch } from 'react-redux'
+import AppAddNewPlace from '../components/AppAddNewPlace'
 import {
-  increment,
-  selectCount,
   selectPins,
   fetchPinsAsync,
-  incrementAsync
-} from '../redux/pinSlice';
+} from '../redux/pinSlice'
 
 export default function Home() {
 
   const dispatch = useDispatch()
-  const count = useSelector(selectCount)
   const pins = useSelector(selectPins)
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [currentPlaceId, setCurrentPlaceId] = useState(null)
@@ -40,14 +36,6 @@ export default function Home() {
 
   const handleAddClick = (e) => {
     setCurrentPosition({ lat: e.lngLat[1], long: e.lngLat[0] })
-  }
-
-  const handleNewPlace = () => {
-    const title = document.getElementById('title').value
-    const description = document.getElementById('description').value
-    const coordinates = currentPosition
-    setCurrentPosition(null)
-    console.log({ title, description, coordinates });
   }
 
   useEffect(() => {
@@ -87,44 +75,11 @@ export default function Home() {
             key={index} />
         })}
 
-        {currentPosition != null && (
-          <>
-            <Marker
-              offsetLeft={-20}
-              offsetTop={-10}
-              latitude={currentPosition.lat} longitude={currentPosition.long}>
-              <MapIcon style={{ fontSize: viewport.zoom * 7 }} />
-            </Marker>
-            <Popup
-              offsetLeft={20}
-              offsetTop={0}
-              anchor="left"
-              latitude={currentPosition.lat} longitude={currentPosition.long}>
-              <Box
-                className="add-place-popup">
-                <h1>Add Place</h1>
-                <TextField
-                  required
-                  id="title"
-                  label="Title"
-                  variant="filled" />
-                <TextField
-                  required
-                  id="description"
-                  variant="filled"
-                  label="Description"
-                  multiline
-                  rows={4}
-                />
-                <Button variant="contained" color="primary" onClick={() => handleNewPlace()}>
-                  Add New Place
-                </Button>
-              </Box>
-            </Popup>
-          </>
-        )
-        }
-
+        {currentPosition != null && (<AppAddNewPlace
+          currentPosition={currentPosition}
+          zoom={viewport.zoom}
+          setCurrentPosition={() => setCurrentPosition(null)}
+        />)}
       </ReactMapGL>
     </Box>
   )

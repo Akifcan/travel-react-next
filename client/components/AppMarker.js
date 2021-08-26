@@ -41,7 +41,7 @@ export default function AppMarker({ pin, zoom, handleMarkerClick, currentPlaceId
                         <br />
                         <label>Information</label>
                         <div className="username">Created by <b>{pin.username}</b> </div>
-                        <div className="username">{timeago.format(new Date(pin.createdAt))} <b>ago</b> </div>
+                        <div className="username">{timeago.format(new Date(pin.createdAt)).replace('ago', '')} <b>ago</b> </div>
                     </Box>
                 </Popup>
             )}
