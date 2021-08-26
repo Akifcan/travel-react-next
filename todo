@@ -6,6 +6,7 @@ validation [ x ]
 authorization [ x ]
 snackbar [ x ]
 control auth [ x ]
-redux [  ]
+
+redux [ x ]
 add new place [  ]
 socket [  ]

@@ -6,7 +6,7 @@ interface IConfig {
 
 const config : IConfig = {
     host: process.env.DB_HOST || '',
-    port: process.env.PORT || 5000,
+    port: process.env.PORT || 5001,
     origin: process.env.APP_CORS || ''
 }
 
