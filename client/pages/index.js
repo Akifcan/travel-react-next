@@ -2,18 +2,25 @@ import React, { useEffect, useState } from 'react'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 import AppMarker from '../components/AppMarker'
 import MapIcon from '@material-ui/icons/Map'
-import LockOpenIcon from '@material-ui/icons/LockOpen'
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd'
 import AppDialog from '../components/AppDialog'
 import { Snackbar } from '@material-ui/core'
-import { getPins } from '../apis'
 import Alert from '@material-ui/lab/Alert'
 import { Box, TextField, Button } from '@material-ui/core'
 import AppManageAuth from '../components/AppManageAuth'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  increment,
+  selectCount,
+  selectPins,
+  fetchPinsAsync,
+  incrementAsync
+} from '../redux/pinSlice';
 
 export default function Home() {
 
-  const [pins, setPins] = useState([])
+  const dispatch = useDispatch()
+  const count = useSelector(selectCount)
+  const pins = useSelector(selectPins)
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [currentPlaceId, setCurrentPlaceId] = useState(null)
   const [currentPosition, setCurrentPosition] = useState(null)
@@ -44,8 +51,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    getPins()
-      .then(response => setPins(response))
+    dispatch(fetchPinsAsync())
   }, [])
 
   return (
