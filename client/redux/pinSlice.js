@@ -1,18 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { fetchCount, fetchPins } from './pinApi'
+import { fetchPins, getCurrentUser, getObjectStore } from './pinApi'
 
 const initialState = {
-    value: 0,
     pins: []
 }
-
-export const incrementAsync = createAsyncThunk(
-    'pin/fetchCount',
-    async (amount) => {
-        const response = await fetchCount(amount);
-        return response.data;
-    }
-)
 
 export const fetchPinsAsync = createAsyncThunk(
     'pin/fetchPins',
@@ -26,26 +17,16 @@ export const counterSlice = createSlice({
     name: 'pin',
     initialState,
     reducers: {
-        increment: (state) => {
-            state.value += 1
-        },
-        decrement: (state) => {
-            state.value -= 1
-        },
-        incrementByAmount: (state, action) => {
-            state.value += action.payload
+        addPin: (state, value) => {
+            const { title, description, coordinates } = value.payload
+            const { lat, long } = coordinates
+            state.pins.push({ title, desc: description, coordinates, lat, long, ratio: 5, createdAt: Date.now, username: JSON.parse(localStorage.user).username })
         },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(incrementAsync.pending, (state) => {
-                console.log('WAIT!')
-            })
             .addCase(fetchPinsAsync.pending, _ => {
                 console.log('wait please')
-            })
-            .addCase(incrementAsync.fulfilled, (state, action) => {
-                state.value += action.payload
             })
             .addCase(fetchPinsAsync.fulfilled, (state, action) => {
                 console.log(action.payload);
@@ -54,8 +35,7 @@ export const counterSlice = createSlice({
     }
 })
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
-export const selectCount = (state) => state.pin.value
+export const { addPin } = counterSlice.actions
 export const selectPins = (state) => state.pin.pins
 
 export default counterSlice.reducer

@@ -2,8 +2,13 @@ import React, { useState } from 'react'
 import { Marker, Popup } from 'react-map-gl'
 import { Box, TextField, Button } from '@material-ui/core'
 import MapIcon from '@material-ui/icons/Map'
+import { useDispatch } from 'react-redux'
+import { addPin } from '../redux/pinSlice'
+
 
 export default function AppAddNewPlace({ currentPosition, zoom, setCurrentPosition }) {
+
+    const dispatch = useDispatch()
 
     const [errorState, setErrorState] = useState({
         titleValid: true,
@@ -16,7 +21,7 @@ export default function AppAddNewPlace({ currentPosition, zoom, setCurrentPositi
         const description = document.getElementById('description').value
         const coordinates = currentPosition
         setCurrentPosition()
-        console.log({ title, description, coordinates });
+        dispatch(addPin({ title, description, coordinates }))
     }
 
     return (

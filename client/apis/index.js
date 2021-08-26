@@ -6,12 +6,12 @@ export const deleteObjectStore = (key) => {
     localStorage.removeItem(key)
 }
 
-export const getObjectStore = (key, value) => {
-    return JSON.parse(localStorage.getItem(key))
+export const getObjectStore = (value) => {
+    return JSON.parse(localStorage.getItem(value))
 }
 
 export const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem('user'))
+    return JSON.parse(localStorage.user)
 }
 
 export const getPins = async () => {
