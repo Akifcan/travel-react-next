@@ -8,6 +8,8 @@ import { Box } from '@material-ui/core'
 import AppManageAuth from '../components/AppManageAuth'
 import { useSelector, useDispatch } from 'react-redux'
 import AppAddNewPlace from '../components/AppAddNewPlace'
+import AppNewProfilePhoto from '../components/AppNewProfilePhoto'
+
 import {
   selectPins,
   selectMessage,
@@ -47,6 +49,7 @@ export default function Home() {
 
   return (
     <Box className="map-wrapper">
+      <AppNewProfilePhoto />
       <AppDialog openDialog={openDialog} dialogTitle={dialogTitle} setOpenDialog={() => {
         setOpenDialog(false)
       }} />
@@ -84,6 +87,7 @@ export default function Home() {
           zoom={viewport.zoom}
           setCurrentPosition={() => setCurrentPosition(null)}
         />)}
+
       </ReactMapGL>
     </Box>
   )

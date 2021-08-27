@@ -1,3 +1,8 @@
+export const controlFileType = (type) => {
+    if (type.includes('image/')) return true
+    else return false
+}
+
 export const setObjectStore = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value))
 }
@@ -86,4 +91,16 @@ export const addNewPlace = async (place) => {
         body: JSON.stringify(place)
     })
     return response.status
+}
+
+export const changeProfilePhoto = async (file) => {
+    const formData = new FormData()
+    formData.append('avatar', file)
+    formData.append('userId', getCurrentUser()._id)
+    const response = await fetch(`${process.env.BASE_URL}/users/upload-profile-photo`, {
+        method: 'POST',
+        body: formData
+    })
+    const json = await response.text()
+    console.log(json);
 }

@@ -26,6 +26,11 @@ const schema = new Schema<IUser>({
         require: true,
         min: 6
     },
+    avatar: {
+        type: String,
+        require: false,
+        default: ''
+    },
     createdAt: {
         type: Date,
         default: Date.now

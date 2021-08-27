@@ -9,6 +9,9 @@ control auth [ x ]
 
 redux [ x ]
 add new place [ x ]
+new user profile photo [ x ]
+
 login redux [  ]
-new user profile photo [  ]
+get location [  ]
+list reviews [  ]
 socket [  ]

@@ -2,6 +2,8 @@
 
 :root {
   --font-family: "Urbanist";
+  --default-x: 10px;
+  --default-y: 10px;
 }
 
 * {
@@ -58,51 +60,11 @@ label {
   font-size: 12px;
 }
 
-form {
-  width: 250px;
-  height: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: rgb(88, 87, 87);
-}
-
-input {
-  border: none;
-  border-bottom: 1px solid gray;
-}
-
-input::placeholder,
-textarea::placeholder {
-  font-size: 12px;
-  color: rgb(185, 184, 184);
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-}
-
-textarea {
-  border: none;
-  border-bottom: 1px solid gray;
-}
-
-.submitButton {
-  border: none;
-  padding: 5px;
-  border-radius: 5px;
-  color: white;
-  background-color: tomato;
-  cursor: pointer;
-}
-
 .buttons,
 .logout {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: var(--default-y);
+  right: var(--default-x);
 }
 
 .button {
@@ -147,4 +109,37 @@ textarea {
 
 .dialog-form {
   height: auto;
+}
+
+.user-info {
+  position: absolute;
+  display: flex;
+  gap: 1rem;
+  z-index: 99;
+  left: var(--default-x);
+  top: var(--default-y);
+}
+
+.avatar {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.avatar.large {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.upload-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 15em;
+}
+
+.hidden {
+  position: absolute;
+  visibility: hidden;
 }
