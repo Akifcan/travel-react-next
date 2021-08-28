@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { loginApi, setObjectStore } from '../../../apis'
+import { loginApi, setObjectStore, registerApi } from '../../../apis'
 
 const initialState = {
     isLoggedIn: false,
@@ -15,6 +15,14 @@ export const fetchLogin = createAsyncThunk(
     }
 )
 
+export const fetchRegister = createAsyncThunk(
+    'auth/fetchRegister',
+    async ({ email, password, username }) => {
+        return await registerApi({ email, password, username })
+    }
+)
+
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -27,7 +35,7 @@ export const authSlice = createSlice({
             .addCase(fetchLogin.fulfilled, (state, action) => {
                 const { data, status, message } = action.payload
                 if (status) {
-                    // setObjectStore('user', data)
+                    setObjectStore('user', data)
                     state.isLoggedIn = true
                 } else {
                     state.isLoggedIn = false

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -6,7 +6,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import { TextField, Button, Grid, Snackbar } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
-import { useSelector, useDispatch, someThenableThunk } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 
 import { registerApi } from '../apis'
@@ -18,6 +18,9 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
     const dispatch = useDispatch()
     const dialogMessage = useSelector(selectDialogMessage)
     const dialogStatus = useSelector(selectDialogStatus)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('')
 
     const [errors, setErrors] = useState({
         usernameError: false,
@@ -27,8 +30,6 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
 
     const handleLogin = async (e) => {
         e.preventDefault()
-        const email = document.getElementById('email').value
-        const password = document.getElementById('password').value
         const result = await Promise.resolve(dispatch(fetchLogin({ email, password })))
         if (result.payload.status) {
             setOpenDialog()
@@ -37,9 +38,6 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
 
     const handleRegister = async (e) => {
         e.preventDefault()
-        const email = document.getElementById('email').value
-        const username = document.getElementById('username').value
-        const password = document.getElementById('password').value
         // registerApi({ email, password, username })
         //     .then(response => {
         //         if (response.status) {
@@ -75,6 +73,8 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
                                 <Grid item xs={12} md={12}>
                                     <TextField
                                         required
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
                                         onBlur={(e) => {
                                             if (e.target.value.length > 20 || e.target.value.length < 3) {
                                                 setErrors(prevState => {
@@ -104,6 +104,10 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
                                     helperText={errors.emailError ? 'Please enter your email' : ''}
                                     className="full-width"
                                     required
+                                    value={email}
+                                    onChange={(e) => {
+                                        setEmail(e.target.value)
+                                    }}
                                     onBlur={(e) => {
                                         if (e.target.value.length < 1) {
                                             setErrors(prevState => {
@@ -126,6 +130,8 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
                                     helperText={errors.passwordError ? 'Please enter at least 3 character for password' : ''}
                                     className="full-width"
                                     required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     onBlur={(e) => {
                                         if (e.target.value.length < 3) {
                                             setErrors(prevState => {
