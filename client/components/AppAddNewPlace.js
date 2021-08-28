@@ -3,7 +3,7 @@ import { Marker, Popup } from 'react-map-gl'
 import { Box, TextField, Button } from '@material-ui/core'
 import MapIcon from '@material-ui/icons/Map'
 import { useDispatch } from 'react-redux'
-import { addPin, addNewPinAsync, closeDialog } from '../redux/pinSlice'
+import { addPin, addNewPinAsync, closeDialog } from '../redux/slices/pin/pinSlice'
 
 
 export default function AppAddNewPlace({ currentPosition, zoom, setCurrentPosition }) {

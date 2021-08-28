@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { fetchPins } from './pinApi'
-import { getCurrentUser, addNewPlace } from '../apis'
+import { getCurrentUser, addNewPlace } from '../../../apis'
 
 const initialState = {
     snackbarResult: null,

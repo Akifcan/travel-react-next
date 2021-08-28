@@ -15,7 +15,7 @@ import {
   selectMessage,
   selectSnackbarResult,
   fetchPinsAsync,
-} from '../redux/pinSlice'
+} from '../redux/slices/pin/pinSlice'
 
 export default function Home() {
 
