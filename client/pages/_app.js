@@ -9,7 +9,8 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     setLoaded(true)
-  }, [])
+    console.log('loaded')
+  }, [loaded])
 
   return loaded && (<Provider store={store}>
     <Component {...pageProps} />

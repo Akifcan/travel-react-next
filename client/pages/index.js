@@ -15,6 +15,8 @@ import {
   selectMessage,
   selectSnackbarResult,
   fetchPinsAsync,
+  setSnackbarMessage,
+  closeDialog
 } from '../redux/slices/pin/pinSlice'
 
 export default function Home() {
@@ -29,8 +31,8 @@ export default function Home() {
   const [dialogTitle, setDialogTitle] = useState('')
 
   const [viewport, setViewport] = useState({
-    latitude: 38.423733,
-    longitude: 27.142826,
+    latitude: 27.142826,
+    longitude: 38.423733,
     zoom: 8
   })
 
@@ -45,6 +47,16 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(fetchPinsAsync())
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      setViewport({
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+        zoom: 8
+      })
+    }, function (_) {
+      dispatch(setSnackbarMessage('Please give location permission for access your current location'))
+    })
+
   }, [])
 
   return (
@@ -53,13 +65,11 @@ export default function Home() {
       <AppDialog openDialog={openDialog} dialogTitle={dialogTitle} setOpenDialog={() => {
         setOpenDialog(false)
       }} />
-      {snackbarStatus != null && (
-        <Snackbar open={snackbarStatus} autoHideDuration={2000}>
-          <Alert severity={snackbarStatus ? 'success' : 'error'}>
-            {message}
-          </Alert>
-        </Snackbar>
-      )}
+      <Snackbar open={snackbarStatus} autoHideDuration={2000}>
+        <Alert severity={'info'}>
+          {message} {snackbarStatus.toString()}
+        </Alert>
+      </Snackbar>
       <AppManageAuth setDialogTitle={setDialogTitle} setOpenDialog={setOpenDialog} />
       <ReactMapGL
         {...viewport}

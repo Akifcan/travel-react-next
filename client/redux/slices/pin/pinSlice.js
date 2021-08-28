@@ -3,7 +3,7 @@ import { fetchPins } from './pinApi'
 import { getCurrentUser, addNewPlace } from '../../../apis'
 
 const initialState = {
-    snackbarResult: null,
+    snackbarResult: false,
     message: '',
     pins: []
 }
@@ -31,6 +31,10 @@ export const counterSlice = createSlice({
     name: 'pin',
     initialState,
     reducers: {
+        setSnackbarMessage: (state, value) => {
+            state.message = value.payload
+            state.snackbarResult = true
+        },
         addPin: (state, value) => {
             const { title, description, coordinates } = value.payload
             const { lat, long } = coordinates
@@ -39,7 +43,8 @@ export const counterSlice = createSlice({
             addNewPlace(pinData)
         },
         closeDialog: (state) => {
-            state.snackbarResult = null
+            state.snackbarResult = false
+            state.message = ''
         }
     },
     extraReducers: (builder) => {
@@ -64,7 +69,7 @@ export const counterSlice = createSlice({
     }
 })
 
-export const { addPin, closeDialog } = counterSlice.actions
+export const { addPin, closeDialog, setSnackbarMessage } = counterSlice.actions
 export const selectPins = (state) => state.pin.pins
 export const selectMessage = (state) => state.pin.message
 export const selectSnackbarResult = (state) => state.pin.snackbarResult
