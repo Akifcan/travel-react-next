@@ -12,8 +12,8 @@ add new place [ x ]
 new user profile photo [ x ]
 
 login redux [ x ]
-get location [  ]
-pwa [  ]
+get location [ x ]
+pwa [ x ]
 
 list reviews [  ]
 unique mail control [  ]
