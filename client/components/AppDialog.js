@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -6,13 +6,18 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import { TextField, Button, Grid, Snackbar } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
+import { useSelector, useDispatch, someThenableThunk } from 'react-redux'
 
-import { loginApi, registerApi, setObjectStore } from '../apis'
+
+import { registerApi } from '../apis'
+import { fetchLogin, selectDialogMessage, selectDialogStatus } from '../redux/slices/auth/authSlice'
 
 
 export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
 
-    const [showDialog, setShowDialog] = useState({ showAlert: false, message: '' })
+    const dispatch = useDispatch()
+    const dialogMessage = useSelector(selectDialogMessage)
+    const dialogStatus = useSelector(selectDialogStatus)
 
     const [errors, setErrors] = useState({
         usernameError: false,
@@ -24,18 +29,10 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
         e.preventDefault()
         const email = document.getElementById('email').value
         const password = document.getElementById('password').value
-        loginApi({ email, password })
-            .then(response => {
-                if (response.status) {
-                    setOpenDialog()
-                    setObjectStore('user', response.data)
-                } else {
-                    setShowDialog({ showAlert: true, message: response.message })
-                }
-            })
-            .catch(error => {
-                setShowDialog({ showAlert: true, message: error.message })
-            })
+        const result = await Promise.resolve(dispatch(fetchLogin({ email, password })))
+        if (result.payload.status) {
+            setOpenDialog()
+        }
     }
 
     const handleRegister = async (e) => {
@@ -43,17 +40,17 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
         const email = document.getElementById('email').value
         const username = document.getElementById('username').value
         const password = document.getElementById('password').value
-        registerApi({ email, password, username })
-            .then(response => {
-                if (response.status) {
-                    setOpenDialog()
-                } else {
-                    setShowDialog({ showAlert: true, message: response.message })
-                }
-            })
-            .catch(error => {
-                setShowDialog({ showAlert: true, message: error.message })
-            })
+        // registerApi({ email, password, username })
+        //     .then(response => {
+        //         if (response.status) {
+        //             setOpenDialog()
+        //         } else {
+        //             setShowDialog({ showAlert: true, message: response.message })
+        //         }
+        //     })
+        //     .catch(error => {
+        //         setShowDialog({ showAlert: true, message: error.message })
+        //     })
     }
 
     return (
@@ -69,9 +66,10 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
                 <br />
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        {showDialog.showAlert && (
-                            <Alert severity="error">{showDialog.message}</Alert>
+                        {dialogMessage.length > 0 && (
+                            <Alert severity={dialogStatus}>{dialogMessage}</Alert>
                         )}
+                        <br />
                         <Grid container spacing={3}>
                             {dialogTitle == 'Register' && (
                                 <Grid item xs={12} md={12}>

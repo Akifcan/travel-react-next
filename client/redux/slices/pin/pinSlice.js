@@ -11,7 +11,7 @@ const initialState = {
 export const fetchPinsAsync = createAsyncThunk(
     'pin/fetchPins',
     async _ => {
-        const response = await fetchPins();
+        const response = await fetchPins()
         return response
     }
 )
@@ -45,7 +45,6 @@ export const counterSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchPinsAsync.pending, _ => {
-                console.log('wait please')
             })
             .addCase(fetchPinsAsync.fulfilled, (state, action) => {
                 state.pins = action.payload

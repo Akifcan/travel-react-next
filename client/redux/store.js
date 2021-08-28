@@ -1,12 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import pinReducer from '../redux/slices/pin/pinSlice';
+import pinReducer from '../redux/slices/pin/pinSlice'
+import authReducer from './slices/auth/authSlice'
 export const store = configureStore({
     reducer: {
-        pin: pinReducer
+        pin: pinReducer,
+        auth: authReducer
     }
-})
-
-store.subscribe(() => {
-    console.log(store.getState());
 })
 

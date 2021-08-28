@@ -11,7 +11,6 @@ export default function AppManageAuth({ setOpenDialog, setDialogTitle }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {
-        console.log(getCurrentUser());
         if (getCurrentUser()) {
             setIsLoggedIn(true)
         }
