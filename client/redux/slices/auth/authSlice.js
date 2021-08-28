@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { loginApi, setObjectStore, registerApi } from '../../../apis'
+import { loginApi, setObjectStore, registerApi, logoutUser } from '../../../apis'
 
 const initialState = {
     isLoggedIn: false,
@@ -26,6 +26,16 @@ export const fetchRegister = createAsyncThunk(
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
+    reducers: {
+        setIsLoggedIn: (state, data) => {
+            state.isLoggedIn = data.payload
+        },
+        logout: (state, data) => {
+            state.isLoggedIn = false
+            logoutUser()
+            console.log('LOGOUT!')
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchLogin.pending, state => {
@@ -48,8 +58,23 @@ export const authSlice = createSlice({
                 state.dialogMessage = action.error.message
                 state.dialogStatus = 'error'
             })
+            .addCase(fetchRegister.pending, state => {
+                state.dialogMessage = 'Please wait'
+                state.dialogStatus = 'info'
+            })
+            .addCase(fetchRegister.fulfilled, (state, action) => {
+                state.isLoggedIn = true
+                setObjectStore('user', action.payload.data)
+            })
+            .addCase(fetchRegister.rejected, (state, action) => {
+                state.isLoggedIn = false
+                state.dialogMessage = action.error.message
+                state.dialogStatus = 'error'
+            })
     }
 })
+
+export const { setIsLoggedIn, logout } = authSlice.actions
 
 export const selectDialogMessage = state => state.auth.dialogMessage
 export const selectDialogStatus = state => state.auth.dialogStatus

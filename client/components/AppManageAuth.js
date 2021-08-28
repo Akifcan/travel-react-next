@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { Box, Button } from '@material-ui/core'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd'
-import { getCurrentUser, logoutUser } from '../apis'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { getCurrentUser } from '../apis'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { selectIsLoggedIn, setIsLoggedIn, logout } from '../redux/slices/auth/authSlice'
 
 
 export default function AppManageAuth({ setOpenDialog, setDialogTitle }) {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const dispatch = useDispatch()
+    const isLoggedIn = useSelector(selectIsLoggedIn)
 
     useEffect(() => {
         if (getCurrentUser()) {
-            setIsLoggedIn(true)
+            dispatch(setIsLoggedIn(true))
         }
     }, [])
 
@@ -48,8 +52,7 @@ export default function AppManageAuth({ setOpenDialog, setDialogTitle }) {
                     variant="contained"
                     color="secondary"
                     onClick={() => {
-                        logoutUser()
-                        setIsLoggedIn(false)
+                        dispatch(logout())
                     }}
                     startIcon={<ExitToAppIcon />}
                 >

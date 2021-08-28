@@ -11,9 +11,10 @@ redux [ x ]
 add new place [ x ]
 new user profile photo [ x ]
 
-login redux [  ]
+login redux [ x ]
 get location [  ]
 pwa [  ]
 list reviews [  ]
 
+unique mail control [  ]
 socket [  ]

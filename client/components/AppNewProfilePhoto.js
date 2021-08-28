@@ -7,14 +7,20 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import CancelIcon from '@material-ui/icons/Cancel'
 import Alert from '@material-ui/lab/Alert'
+import { useSelector, useDispatch } from 'react-redux'
+
 
 import { changeProfilePhoto } from '../apis'
+import { selectIsLoggedIn, setIsLoggedIn } from '../redux/slices/auth/authSlice'
+
 
 export default function AppNewProfilePhoto() {
 
+
+    const dispatch = useDispatch()
+    const isLoggedIn = useSelector(selectIsLoggedIn)
     const fileInput = useRef()
     const [openDialog, setOpenDialog] = useState(false)
-    const [userLoggedIn, setUserLoggedIn] = useState(false)
     const [avatarPreview, setAvatarPreview] = useState('')
     const [avatarAlt, setAvatarAlt] = useState('')
     const [isError, setIsError] = useState(false)
@@ -40,14 +46,14 @@ export default function AppNewProfilePhoto() {
 
 
     useEffect(() => {
-        if (getCurrentUser()) {
-            setUserLoggedIn(true)
+        if (getCurrentUser() != null) {
+            dispatch(setIsLoggedIn(true))
             setAvatarPreview('http://localhost:5001/' + getCurrentUser().avatar)
             setAvatarAlt(getCurrentUser().username)
         }
     }, [])
 
-    return userLoggedIn && (
+    return isLoggedIn && (
         <Box className="user-info">
             <Dialog className="upload-form" aria-labelledby="simple-dialog-title" open={openDialog} onClose={() => setOpenDialog(false)}>
                 <DialogTitle id="simple-dialog-title">Set new profile photo</DialogTitle>

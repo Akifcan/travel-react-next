@@ -4,13 +4,12 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import { TextField, Button, Grid, Snackbar } from '@material-ui/core'
+import { TextField, Button, Grid } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
 import { useSelector, useDispatch } from 'react-redux'
 
 
-import { registerApi } from '../apis'
-import { fetchLogin, selectDialogMessage, selectDialogStatus } from '../redux/slices/auth/authSlice'
+import { fetchLogin, fetchRegister, selectDialogMessage, selectDialogStatus } from '../redux/slices/auth/authSlice'
 
 
 export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
@@ -38,17 +37,9 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
 
     const handleRegister = async (e) => {
         e.preventDefault()
-        // registerApi({ email, password, username })
-        //     .then(response => {
-        //         if (response.status) {
-        //             setOpenDialog()
-        //         } else {
-        //             setShowDialog({ showAlert: true, message: response.message })
-        //         }
-        //     })
-        //     .catch(error => {
-        //         setShowDialog({ showAlert: true, message: error.message })
-        //     })
+        console.log(email, password, username);
+        dispatch(fetchRegister({ email, password, username }))
+        setOpenDialog()
     }
 
     return (
