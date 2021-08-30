@@ -137,6 +137,7 @@ label {
   justify-content: space-around;
   align-items: center;
   min-height: 15em;
+  overflow: hidden;
 }
 
 .hidden {

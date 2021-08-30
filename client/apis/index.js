@@ -57,6 +57,10 @@ export const registerApi = async ({ email, password, username }) => {
     }
 }
 
+export const getAvatar = () => {
+    return process.env.STATIC_URL + getCurrentUser().avatar
+}
+
 export const loginApi = async ({ email, password }) => {
     try {
         const response = await fetch(`${process.env.BASE_URL}/users/login`, {

@@ -10,7 +10,7 @@ import Alert from '@material-ui/lab/Alert'
 import { useSelector, useDispatch } from 'react-redux'
 
 
-import { changeProfilePhoto } from '../apis'
+import { changeProfilePhoto, getAvatar } from '../apis'
 import { selectIsLoggedIn, setIsLoggedIn } from '../redux/slices/auth/authSlice'
 
 
@@ -48,7 +48,7 @@ export default function AppNewProfilePhoto() {
     useEffect(() => {
         if (getCurrentUser() != null) {
             dispatch(setIsLoggedIn(true))
-            setAvatarPreview('http://localhost:5001/' + getCurrentUser().avatar)
+            setAvatarPreview(getAvatar())
             setAvatarAlt(getCurrentUser().username)
         }
     }, [])
@@ -85,7 +85,7 @@ export default function AppNewProfilePhoto() {
                 title="Upload new profile picture"
                 aria-label="Upload new profile picture"
                 onClick={() => setOpenDialog(true)}>
-                <Avatar className="avatar" alt="Remy Sharp" src={'http://localhost:5001/' + getCurrentUser().avatar} />
+                <Avatar className="avatar" alt="Remy Sharp" src={getAvatar()} />
             </Tooltip>
             <Button
                 onClick={() => setOpenDialog(true)}
