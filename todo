@@ -15,6 +15,7 @@ login redux [ x ]
 get location [ x ]
 pwa [ x ]
 
-list reviews [  ]
+docker.compose [  ]
 unique mail control [  ]
+list reviews [  ]
 socket [  ]

@@ -67,7 +67,7 @@ export default function Home() {
       }} />
       <Snackbar open={snackbarStatus} autoHideDuration={2000}>
         <Alert severity={'info'}>
-          {message} {snackbarStatus.toString()}
+          {message}
         </Alert>
       </Snackbar>
       <AppManageAuth setDialogTitle={setDialogTitle} setOpenDialog={setOpenDialog} />
