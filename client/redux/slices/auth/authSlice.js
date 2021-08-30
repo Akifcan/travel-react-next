@@ -63,12 +63,18 @@ export const authSlice = createSlice({
                 state.dialogStatus = 'info'
             })
             .addCase(fetchRegister.fulfilled, (state, action) => {
-                state.isLoggedIn = true
-                setObjectStore('user', action.payload.data)
+                if (action.payload.data) {
+                    state.isLoggedIn = true
+                    setObjectStore('user', action.payload.data)
+                } else {
+                    console.log('no data!');
+                    state.dialogMessage = action.payload.message
+                    state.dialogStatus = 'error'
+                }
             })
             .addCase(fetchRegister.rejected, (state, action) => {
                 state.isLoggedIn = false
-                state.dialogMessage = action.error.message
+                state.dialogMessage = action.payload.message
                 state.dialogStatus = 'error'
             })
     }

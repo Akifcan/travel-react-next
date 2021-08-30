@@ -2,21 +2,17 @@ import { Router, Response, Request } from "express"
 import { Types } from 'mongoose'
 import Users from "../models/User"
 import bcrypt from 'bcrypt'
-import { isImage } from '../helpers'
+import { isImage, isUnique } from '../helpers'
 import fileUpload from 'express-fileupload'
-
-interface IAvatar{
-    size: string
-}
 
 const router : Router = Router()
 
 router.post('/register', async (req: Request, res: Response) => {
     try{
+        console.log(req.body.email);
+        if(!await isUnique(Users, {email: req.body.email})) return res.status(400).json({status: false, message: 'This email already exist'})
         const { email, username } = req.body
         const password : string = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10))
-        console.log(password);
-        
         res.status(201).json(await Users.create({email, username, password}))
     }catch(error){
         console.log(error);

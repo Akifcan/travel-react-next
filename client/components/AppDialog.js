@@ -37,9 +37,10 @@ export default function AppDialog({ openDialog, setOpenDialog, dialogTitle }) {
 
     const handleRegister = async (e) => {
         e.preventDefault()
-        console.log(email, password, username);
-        dispatch(fetchRegister({ email, password, username }))
-        setOpenDialog()
+        const result = await Promise.resolve(dispatch(fetchRegister({ email, password, username })))
+        if (result.payload.data) {
+            setOpenDialog()
+        }
     }
 
     return (

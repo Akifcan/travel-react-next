@@ -13,7 +13,6 @@ const schema = new Schema<IUser>({
         require: true,
         min: 3,
         max: 20,
-        unique: true
     },
     email: {
         type: String,
