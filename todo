@@ -16,6 +16,6 @@ get location [ x ]
 pwa [ x ]
 
 docker.compose [ x ]
-unique mail control [  ]
+unique mail control [ x ]
 list reviews [  ]
 socket [  ]

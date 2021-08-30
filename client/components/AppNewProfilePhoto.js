@@ -85,7 +85,7 @@ export default function AppNewProfilePhoto() {
                 title="Upload new profile picture"
                 aria-label="Upload new profile picture"
                 onClick={() => setOpenDialog(true)}>
-                <Avatar className="avatar" alt="Remy Sharp" src="/avatar/test.jpeg" />
+                <Avatar className="avatar" alt="Remy Sharp" src={'http://localhost:5001/' + getCurrentUser().avatar} />
             </Tooltip>
             <Button
                 onClick={() => setOpenDialog(true)}
