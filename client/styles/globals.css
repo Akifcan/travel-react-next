@@ -144,3 +144,27 @@ label {
   position: absolute;
   visibility: hidden;
 }
+
+.list-places-button {
+  position: absolute;
+  z-index: 99;
+  bottom: calc(var(--default-y) + 50px);
+  left: calc(var(--default-x) + 50px);
+}
+
+.MuiDrawer-paper {
+  padding: 1rem;
+  width: 50% !important;
+}
+
+.MuiCardMedia-root {
+  width: 100% !important;
+  height: 15rem !important;
+  object-fit: cover !important;
+}
+
+@media (max-width: 700px) {
+  .MuiDrawer-paper {
+    width: 100% !important;
+  }
+}

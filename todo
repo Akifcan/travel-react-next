@@ -19,3 +19,6 @@ docker.compose [ x ]
 unique mail control [ x ]
 list reviews [  ]
 socket [  ]
+
+send auth email [  ]
+send emails [  ]

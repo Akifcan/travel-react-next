@@ -9,6 +9,7 @@ import AppManageAuth from '../components/AppManageAuth'
 import { useSelector, useDispatch } from 'react-redux'
 import AppAddNewPlace from '../components/AppAddNewPlace'
 import AppNewProfilePhoto from '../components/AppNewProfilePhoto'
+import AppList from '../components/AppList'
 
 import {
   selectPins,
@@ -62,6 +63,7 @@ export default function Home() {
   return (
     <Box className="map-wrapper">
       <AppNewProfilePhoto />
+      <AppList />
       <AppDialog openDialog={openDialog} dialogTitle={dialogTitle} setOpenDialog={() => {
         setOpenDialog(false)
       }} />
