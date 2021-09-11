@@ -21,7 +21,6 @@ import {
   setSnackbarMessage,
   fetchListedPinsAsync,
   handleSocketIo,
-  closeDialog
 } from '../redux/slices/pin/pinSlice'
 
 export default function Home() {
@@ -63,7 +62,7 @@ export default function Home() {
     }, function (_) {
       dispatch(setSnackbarMessage('Please give location permission for access your current location'))
     })
-    dispatch(handleSocketIo(io.connect('http://localhost:5001')))
+    // dispatch(handleSocketIo(io.connect('http://localhost:5001')))
   }, [])
 
   return (

@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { fetchPins, fetchListedPins } from './pinApi'
 import { getCurrentUser, addNewPlace } from '../../../apis'
+import io from 'socket.io-client'
+const socket = io.connect('http://localhost:5001')
+
 
 const initialState = {
     snackbarResult: false,
@@ -34,6 +37,7 @@ export const addNewPinAsync = createAsyncThunk(
         const pinData = { title, desc: description, coordinates, lat, long, ratio: 5, createdAt: Date.now, username: getCurrentUser().username }
         const response = await addNewPlace(pinData)
         if (response === 201) {
+            socket.emit('new-place', pinData)
             return true
         } else {
             return false
@@ -57,8 +61,6 @@ export const counterSlice = createSlice({
             const { lat, long } = coordinates
             const pinData = { title, desc: description, coordinates, lat, long, ratio: 5, createdAt: Date.now, username: getCurrentUser().username }
             state.pins.push(pinData)
-            console.log(state.io)
-            state.io.emit('new-place', pinData)
             addNewPlace(pinData)
         },
         closeDialog: (state) => {
