@@ -16,6 +16,7 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.get("/", async (req: Request, res: Response) => {
   try {
+    console.log("fetch!");
     if (req.query.staticMap) {
       const lookup = await Pin.aggregate([
         {

@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import AppAddNewPlace from '../components/AppAddNewPlace'
 import AppNewProfilePhoto from '../components/AppNewProfilePhoto'
 import AppList from '../components/AppList'
-import io from 'socket.io-client'
+import socket from '../redux/socket'
 
 
 import {
@@ -20,7 +20,8 @@ import {
   fetchPinsAsync,
   setSnackbarMessage,
   fetchListedPinsAsync,
-  handleSocketIo,
+  pushPin,
+  closeDialog
 } from '../redux/slices/pin/pinSlice'
 
 export default function Home() {
@@ -53,6 +54,15 @@ export default function Home() {
   useEffect(() => {
     dispatch(fetchPinsAsync())
     dispatch(fetchListedPinsAsync())
+
+    socket.on('list-new-place', data => {
+      dispatch(fetchListedPinsAsync())
+      dispatch(pushPin(data))
+      setTimeout(() => {
+        dispatch(closeDialog())
+      }, 3000)
+    })
+
     navigator.geolocation.getCurrentPosition(function (pos) {
       setViewport({
         latitude: pos.coords.latitude,
@@ -62,7 +72,6 @@ export default function Home() {
     }, function (_) {
       dispatch(setSnackbarMessage('Please give location permission for access your current location'))
     })
-    // dispatch(handleSocketIo(io.connect('http://localhost:5001')))
   }, [])
 
   return (

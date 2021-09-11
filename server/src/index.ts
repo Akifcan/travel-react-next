@@ -39,6 +39,6 @@ const io = new Server(server, {
 
 io.on("connection", (socket: Socket) => {
   socket.on("new-place", (data) => {
-    console.log(data);
+    socket.broadcast.emit("list-new-place", data);
   });
 });

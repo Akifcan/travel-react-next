@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { fetchPins, fetchListedPins } from './pinApi'
 import { getCurrentUser, addNewPlace } from '../../../apis'
-import io from 'socket.io-client'
-const socket = io.connect('http://localhost:5001')
+import socket from '../../socket'
 
 
 const initialState = {
@@ -63,6 +62,11 @@ export const counterSlice = createSlice({
             state.pins.push(pinData)
             addNewPlace(pinData)
         },
+        pushPin: (state, value) => {
+            state.pins.push(value.payload)
+            state.message = "New pin added!"
+            state.snackbarResult = true
+        },
         closeDialog: (state) => {
             state.snackbarResult = false
             state.message = ''
@@ -93,7 +97,7 @@ export const counterSlice = createSlice({
     }
 })
 
-export const { addPin, closeDialog, setSnackbarMessage, handleSocketIo } = counterSlice.actions
+export const { addPin, closeDialog, setSnackbarMessage, pushPin } = counterSlice.actions
 export const selectPins = (state) => state.pin.pins
 export const selectMessage = (state) => state.pin.message
 export const selectSnackbarResult = (state) => state.pin.snackbarResult
