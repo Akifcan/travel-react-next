@@ -1,0 +1,45 @@
+<mjml>
+  <mj-body>
+    <mj-include path="./common/navbar.mjml" />
+    <mj-wrapper border-radius="0 0 50px 50px" background-color="#dedede">
+      <mj-section>
+        <mj-column>
+          <mj-text align="center" font-size="20px">
+            <h1>Welcome To</h1>
+            <h1>Travel</h1>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-image width="300px" src="./welcome.png" />
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-text align="center" font-size="20px" line-height="40px">
+            <p>
+              Now you are ready for share travel expeirences with other
+              <b>users!!</b>
+            </p>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-button
+            height="50px"
+            width="250px"
+            font-size="20px"
+            border-radius="20px"
+            background-color="#006994"
+            color="white"
+          >
+            Start NOW!
+          </mj-button>
+        </mj-column>
+      </mj-section>
+      <mj-include path="./common/footer.mjml" />
+    </mj-wrapper>
+  </mj-body>
+</mjml>

@@ -1,0 +1,20 @@
+<mj-section background-color="#006994">
+  <mj-column>
+    <mj-navbar
+      base-url="https://mjml.io"
+      hamburger="hamburger"
+      ico-color="#ffffff"
+    >
+      <mj-navbar-link href="/gettings-started-onboard" color="#ffffff"
+        >Travel APP</mj-navbar-link
+      >
+      <mj-navbar-link href="/try-it-live" color="#ffffff"
+        >ABOUT US</mj-navbar-link
+      >
+      <mj-navbar-link href="/templates" color="#ffffff"
+        >CONTACT US</mj-navbar-link
+      >
+      <mj-navbar-link href="/components" color="#ffffff">CAREER</mj-navbar-link>
+    </mj-navbar>
+  </mj-column>
+</mj-section>

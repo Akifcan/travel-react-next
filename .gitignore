@@ -1,5 +1,6 @@
 client/node_modules
 server/node_modules
+mails/node_modules
 docker/data
 node_modules
 .env

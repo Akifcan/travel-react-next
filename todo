@@ -21,4 +21,4 @@ list reviews [ x ]
 relation user avatar [ x ]
 socket [ x ]
 
-mail template [  ]
+mail template [ x ]
