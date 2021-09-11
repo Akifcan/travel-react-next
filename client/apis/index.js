@@ -61,6 +61,9 @@ export const getAvatar = () => {
     return process.env.STATIC_URL + getCurrentUser().avatar
 }
 
+export const getStaticURL = process.env.STATIC_URL
+
+
 export const loginApi = async ({ email, password }) => {
     try {
         const response = await fetch(`${process.env.BASE_URL}/users/login`, {

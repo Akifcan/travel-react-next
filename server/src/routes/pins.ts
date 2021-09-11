@@ -15,24 +15,45 @@ router.post("/", async (req: Request, res: Response) => {
 });
 
 router.get("/", async (req: Request, res: Response) => {
-  console.log(req.query);
-  if (req.query.staticMap) {
-    const pins = await Pin.find().map((parent) => {
-      return parent.map((pin: any | IPin) => {
-        return Object.assign(
-          { mapUrl: staticMapApi(pin.long, pin.lat) },
-          pin._doc
-        );
+  try {
+    if (req.query.staticMap) {
+      const lookup = await Pin.aggregate([
+        {
+          $lookup: {
+            from: "users",
+            localField: "username",
+            foreignField: "username",
+            as: "user",
+          },
+        },
+        {
+          $unwind: "$user",
+        },
+        {
+          $project: {
+            title: 1,
+            desc: 1,
+            username: 1,
+            createdAt: 1,
+            _id: 0,
+            lat: 1,
+            long: 1,
+            user: {
+              _id: 1,
+              avatar: 1,
+            },
+          },
+        },
+      ]);
+      const pins = lookup.map((pin) => {
+        return Object.assign({ mapUrl: staticMapApi(pin.long, pin.lat) }, pin);
       });
-    });
-    res.status(200).json(pins);
-  } else {
-    try {
+      res.status(200).json(pins);
+    } else {
       res.status(200).json(await Pin.find());
-    } catch (error) {
-      console.log(error);
-      throw new Error("Error");
     }
+  } catch (error) {
+    throw new Error("Error");
   }
 });
 

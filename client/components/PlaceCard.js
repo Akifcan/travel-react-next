@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 import * as timeago from 'timeago.js';
+import { getStaticURL } from '../apis'
 
 
 
@@ -13,7 +14,7 @@ export default function PlaceCard({ pin }) {
     return <Card>
         <CardHeader
             avatar={
-                <Avatar aria-label="recipe">
+                <Avatar aria-label="recipe" src={getStaticURL + pin.user.avatar}>
                     {pin.username}
                 </Avatar>
             }
