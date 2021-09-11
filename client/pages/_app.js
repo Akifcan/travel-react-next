@@ -3,7 +3,6 @@ import { Provider } from 'react-redux'
 import { store } from '../redux/store'
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
-
 function MyApp({ Component, pageProps }) {
 
   const [loaded, setLoaded] = useState(false)

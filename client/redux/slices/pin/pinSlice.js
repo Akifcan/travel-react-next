@@ -6,7 +6,8 @@ const initialState = {
     snackbarResult: false,
     message: '',
     pins: [],
-    listedPins: []
+    listedPins: [],
+    io: null
 }
 
 export const fetchPinsAsync = createAsyncThunk(
@@ -32,7 +33,11 @@ export const addNewPinAsync = createAsyncThunk(
         const { lat, long } = coordinates
         const pinData = { title, desc: description, coordinates, lat, long, ratio: 5, createdAt: Date.now, username: getCurrentUser().username }
         const response = await addNewPlace(pinData)
-        return response == 201 ? true : false
+        if (response === 201) {
+            return true
+        } else {
+            return false
+        }
     }
 )
 
@@ -40,6 +45,9 @@ export const counterSlice = createSlice({
     name: 'pin',
     initialState,
     reducers: {
+        handleSocketIo: (state, value) => {
+            state.io = value.payload
+        },
         setSnackbarMessage: (state, value) => {
             state.message = value.payload
             state.snackbarResult = true
@@ -49,6 +57,8 @@ export const counterSlice = createSlice({
             const { lat, long } = coordinates
             const pinData = { title, desc: description, coordinates, lat, long, ratio: 5, createdAt: Date.now, username: getCurrentUser().username }
             state.pins.push(pinData)
+            console.log(state.io)
+            state.io.emit('new-place', pinData)
             addNewPlace(pinData)
         },
         closeDialog: (state) => {
@@ -81,7 +91,7 @@ export const counterSlice = createSlice({
     }
 })
 
-export const { addPin, closeDialog, setSnackbarMessage } = counterSlice.actions
+export const { addPin, closeDialog, setSnackbarMessage, handleSocketIo } = counterSlice.actions
 export const selectPins = (state) => state.pin.pins
 export const selectMessage = (state) => state.pin.message
 export const selectSnackbarResult = (state) => state.pin.snackbarResult

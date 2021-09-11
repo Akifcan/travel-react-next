@@ -14,8 +14,8 @@ export default function AppList() {
     return (
         <>
             <Drawer anchor={"right"} open={drawerToggle} onClose={() => setDrawerToggle(false)}>
-                {pins.map(pin => (
-                    <PlaceCard pin={pin} />
+                {pins.map((pin, index) => (
+                    <PlaceCard key={index} pin={pin} />
                 ))}
             </Drawer>
             <Box className="list-places-button">

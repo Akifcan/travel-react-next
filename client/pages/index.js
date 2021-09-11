@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import AppAddNewPlace from '../components/AppAddNewPlace'
 import AppNewProfilePhoto from '../components/AppNewProfilePhoto'
 import AppList from '../components/AppList'
+import io from 'socket.io-client'
+
 
 import {
   selectPins,
@@ -18,10 +20,12 @@ import {
   fetchPinsAsync,
   setSnackbarMessage,
   fetchListedPinsAsync,
+  handleSocketIo,
   closeDialog
 } from '../redux/slices/pin/pinSlice'
 
 export default function Home() {
+
 
   const dispatch = useDispatch()
   const pins = useSelector(selectPins)
@@ -59,7 +63,7 @@ export default function Home() {
     }, function (_) {
       dispatch(setSnackbarMessage('Please give location permission for access your current location'))
     })
-
+    dispatch(handleSocketIo(io.connect('http://localhost:5001')))
   }, [])
 
   return (
