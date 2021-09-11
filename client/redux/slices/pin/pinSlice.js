@@ -1,17 +1,26 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { fetchPins } from './pinApi'
+import { fetchPins, fetchListedPins } from './pinApi'
 import { getCurrentUser, addNewPlace } from '../../../apis'
 
 const initialState = {
     snackbarResult: false,
     message: '',
-    pins: []
+    pins: [],
+    listedPins: []
 }
 
 export const fetchPinsAsync = createAsyncThunk(
     'pin/fetchPins',
     async _ => {
         const response = await fetchPins()
+        return response
+    }
+)
+
+export const fetchListedPinsAsync = createAsyncThunk(
+    'pin/fetchListedPins',
+    async _ => {
+        const response = await fetchListedPins()
         return response
     }
 )
@@ -66,6 +75,9 @@ export const counterSlice = createSlice({
                     state.snackbarResult = false
                 }
             })
+            .addCase(fetchListedPinsAsync.fulfilled, (state, action) => {
+                state.listedPins = action.payload
+            })
     }
 })
 
@@ -73,5 +85,6 @@ export const { addPin, closeDialog, setSnackbarMessage } = counterSlice.actions
 export const selectPins = (state) => state.pin.pins
 export const selectMessage = (state) => state.pin.message
 export const selectSnackbarResult = (state) => state.pin.snackbarResult
+export const selectListedPins = (state) => state.pin.listedPins
 
 export default counterSlice.reducer

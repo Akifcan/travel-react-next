@@ -17,6 +17,7 @@ import {
   selectSnackbarResult,
   fetchPinsAsync,
   setSnackbarMessage,
+  fetchListedPinsAsync,
   closeDialog
 } from '../redux/slices/pin/pinSlice'
 
@@ -48,6 +49,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(fetchPinsAsync())
+    dispatch(fetchListedPinsAsync())
     navigator.geolocation.getCurrentPosition(function (pos) {
       setViewport({
         latitude: pos.coords.latitude,

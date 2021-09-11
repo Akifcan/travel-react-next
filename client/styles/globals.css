@@ -153,8 +153,14 @@ label {
 }
 
 .MuiDrawer-paper {
+  overflow-y: scroll;
+  display: block !important;
   padding: 1rem;
   width: 50% !important;
+}
+
+.MuiDrawer-paper > * {
+  margin-bottom: 1rem;
 }
 
 .MuiCardMedia-root {
