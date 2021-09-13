@@ -1,4 +1,4 @@
-name: Update Prettier
+name: Linter
 on: [push]
 jobs:
   update_prettier:
@@ -13,11 +13,11 @@ jobs:
       # Install your package dependencies
       - run: npm ci --prefix .\client\
       # Fix linting errors with the new prettier version
-      - run: npm run --prefix .\client\ format
+      - run: npm run --prefix .\client\ lint
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          title: "Prettier updated"
-          body: "An update to prettier required updates to your code."
+          title: "Linter"
+          body: "Linter next.js"
           branch: ${{ github.ref }}
-          commit-message: "style: prettier"
+          commit-message: "linter: next"
