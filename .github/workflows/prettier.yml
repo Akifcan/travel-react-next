@@ -14,11 +14,3 @@ jobs:
       - run: npm ci --prefix ./client
       # Fix linting errors with the new prettier version
       - run: npm run --prefix ./client format
-      # Create a pull request if there are any changes
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        title: "Prettier updated"
-        body: "An update to prettier required updates to your code."
-        branch: ${{ github.ref }}
-        commit-message: "style: prettier"
