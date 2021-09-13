@@ -14,3 +14,8 @@ jobs:
       - run: npm ci --prefix ./client
       # Fix linting errors with the new prettier version
       - run: npm run --prefix ./client format
+        with:
+          title: "Prettier updated"
+          body: "An update to prettier required updates to your code."
+          branch: ${{ github.ref }}
+          commit-message: "style: prettier"
