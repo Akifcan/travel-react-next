@@ -1,7 +1,7 @@
 name: Update Lint
 on:
   push:
-    branches: [master]
+    branches: [main]
 jobs:
   update_prettier:
     runs-on: ubuntu-latest
