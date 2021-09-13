@@ -1,4 +1,4 @@
-name: Update Prettier
+name: Update Lint
 on:
   push:
     branches: [master]
@@ -11,11 +11,11 @@ jobs:
         with:
           version: 12
       - run: npm ci --prefix ./client
-      - run: npm run --prefix ./client format
+      - run: npm run --prefix ./client lint
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          title: "Prettier updated"
-          body: "An update to prettier required updates to your code."
+          title: "Lint results"
+          body: "eslint"
           branch: ${{ github.ref }}
-          commit-message: "style: prettier"
+          commit-message: "eslint js"
