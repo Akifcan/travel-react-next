@@ -11,9 +11,9 @@ jobs:
         with:
           version: 12
       # Install your package dependencies
-      - run: npm ci --prefix .\client\
+      - run: npm ci --prefix ./client
       # Fix linting errors with the new prettier version
-      - run: npm run --prefix .\client\ format
+      - run: npm run --prefix ./client format
       # Create a pull request if there are any changes
       - uses: gr2m/create-or-update-pull-request-action@v1.x
         env:
