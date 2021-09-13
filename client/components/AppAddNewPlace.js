@@ -57,7 +57,7 @@ export default function AppAddNewPlace({ currentPosition, zoom, setCurrentPositi
 									console.log('ier')
 									console.log('test')
 									console.log('test')
-									console.log("my test")
+									console.log('my test')
 								}
 							}}
 							helperText={!errorState.titleValid ? 'Please enter title' : ''}
